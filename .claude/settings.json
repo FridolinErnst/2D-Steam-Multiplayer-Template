@@ -1,0 +1,82 @@
+{
+  "extraKnownMarketplaces": {
+    "unity-agent-plugin": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/Unity-Technologies/unity-agent-plugin.git"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "unity@unity-agent-plugin": true
+  },
+  "enabledMcpjsonServers": [
+    "blender"
+  ],
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|Grep",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "graphify hook-guard search",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "Read|Glob",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "graphify hook-guard read",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "grep -qE '\"file_path\" *: *\"[^\"]*\\.(cs|py)\"' && graphify update \"$CLAUDE_PROJECT_DIR\" >/dev/null 2>&1; exit 0",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "graphify hook-guard compact",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(unity status)",
+      "Bash(unity status *)",
+      "Bash(unity command console get *)",
+      "Bash(unity command console status)",
+      "Bash(unity command console status *)",
+      "Bash(unity command script recompile_status)",
+      "Bash(unity list)",
+      "Bash(unity list *)",
+      "Bash(unity command editor.playmode get_scenario_status)",
+      "Bash(unity editors running)",
+      "Bash(unity command editor status)",
+      "Bash(graphify query *)",
+      "Bash(graphify explain *)",
+      "Bash(graphify path *)"
+    ]
+  }
+}
