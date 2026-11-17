@@ -4,7 +4,7 @@ namespace Game.Data
 {
     /// <summary>
     /// Session-wide network configuration: Steam app id, player limit, and which transport to use where.
-    /// The single place to change 480 → the real app id, or 6 → more players.
+    /// The single place to change 480 → the real app id, or the online (6) and local (10) player limits.
     /// </summary>
     [CreateAssetMenu(menuName = "Game/Session Settings")]
     public sealed class SessionSettings : ScriptableObject
@@ -12,8 +12,11 @@ namespace Game.Data
         [Tooltip("Steam app id. 480 (Spacewar) until the game has its own.")]
         [SerializeField] private uint _steamAppId = 480;
 
-        [Tooltip("Most players in one session, host included.")]
+        [Tooltip("Most players in one online session, host included.")]
         [SerializeField, Min(1)] private int _maxPlayers = 6;
+
+        [Tooltip("Most players on one screen in a local session. Read by the game's local join code.")]
+        [SerializeField, Min(1)] private int _maxLocalPlayers = 10;
 
         [Tooltip("Use the Steam transport in builds when Steam is running.")]
         [SerializeField] private bool _useSteamInBuilds = true;
@@ -30,8 +33,11 @@ namespace Game.Data
         /// <summary>Steam app id.</summary>
         public uint SteamAppId => _steamAppId;
 
-        /// <summary>Most players in one session, host included.</summary>
+        /// <summary>Most players in one online session, host included.</summary>
         public int MaxPlayers => _maxPlayers;
+
+        /// <summary>Most players on one screen in a local session.</summary>
+        public int MaxLocalPlayers => _maxLocalPlayers;
 
         /// <summary>Whether the Steam transport should be used in the current context (Editor or build).</summary>
         public bool UseSteam => Application.isEditor ? _useSteamInEditor : _useSteamInBuilds;

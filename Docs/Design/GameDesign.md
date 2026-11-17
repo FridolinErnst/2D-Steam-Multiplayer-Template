@@ -26,6 +26,6 @@ Already built; change it here first if the game wants something else. Words are 
 - **In-game Menu** (Esc / gamepad Start during a Session): **Resume**, **Invite Friends** (Online over Steam only),
   **Leave to Main Menu**. A Local game pauses while it is open; an Online game keeps running.
 - **When the host leaves or the connection drops**, Clients return to the Main Menu with one line explaining why.
-- **Max players:** 6 per Online game, host included (`SessionSettings`).
+- **Max players:** 6 per Online game, host included; 10 on one screen in a Local game (`SessionSettings`).
 
 ## Open questions
